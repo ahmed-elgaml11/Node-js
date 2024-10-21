@@ -1,0 +1,15 @@
+{
+  "name": "coursrs-manger",
+  "version": "1.0.0",
+  "description": "coursrs-manger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"ahmed elgaml\"",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^11.1.0"
+  }
+}
