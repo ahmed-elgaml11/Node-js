@@ -43,16 +43,33 @@ console.log(replace("I have 12 cars, 11 of which are 89 years old"));
 
 ### Using Star Wars API Documentation, write a program that gets the planet name of the character with ID 4
 ``` js
-async function planet(){
-  let url= await fetch ("GET","https://swapi.dev/api/people/:4/").then((v)=>{
-    let data = v.json();
-    return data;
+getplanetname = (id) => {
+  fetch(`https://swapi.dev/api/people/${id}/`)
+  .then(response => { 
+    if (!response.status===200){
+      throw new Error ('character notfiund')
+    }
+    return response.json();
   })
-  let p_url=url.homeworld;
-  let planet = await fetch(p_url);
-  let p_name = await planet.json()
-  console.log(p_name.name);
+  .then((data) => {
+    const charcterplanet = data.homeworld;
+    return fetch(charcterplanet)
+  })
+  .then((response) => {
+    if(!response.status === 200){
+      throw new Error('planet not found')
+
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const planetname = data.name
+    console.log(planetname)
+  })
+  .catch(err => console.log(err.message))
+
 }
+
 ```
 
 
@@ -63,22 +80,26 @@ async function planet(){
 ### Seif is bad at math, can you help him calculate the total price of the products?
 
 ``` js
-fetch("https://fakestoreapi.com/products").then(
-  (v)=>{
-    let data = v.json();
-    return data;
-  }
-).then(
-  (v)=>{
-    console.log(v);
-    let sum=0 ; 
-    for (let i=0 ; i<v.length ; i++){
-      if(v[i].id==1||v[i].id==3||v[i].id==4)
-      sum+=v[i].price
+totalprice = async() => {
+  let items =[
+    {id: 1, quantity: 3},
+    {id: 3, quantity: 5},
+    {id: 4, quantity: 4}
+  ]
+  let price = 0 ;
+  for(const item of items){
+    const response = await fetch(`https://fakestoreapi.com/products/${item.id}`);
+    if(!response.status===200){
+      throw new Error('not found')
     }
-    console.log(sum);
+    const data = await response.json();
+    price += data.price * item.quantity
   }
-)
+  return price;
+}
+totalprice().then(price => console.log('the total price is ',price))
+.catch(err => console.log(err))
+
 ```
 ### The following code suffers from callback hell. The callbacks are nested in a confusing way. Solve the callback hell problem using each of:
 ``` js
