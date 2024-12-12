@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Task List</h1>
+        <ul id="taskList">
+           <% data.forEach((task) => { %>
+               <li>
+                <a href="/task/<%= task._id%>/details" class="task-link">
+                   <%= task.name %>  
+                </a>
+                   <a class="delete" data-doc="<%=task._id%>">Delete</a>
+
+               </li>
+           <% }) %>
+        </ul>
+        <a href="/task/create" class="button">Add New Task</a>
+    </div>
+
+    <script>
+        let tasks = document.querySelectorAll(".delete")
+        tasks.forEach((task) => {
+            task.addEventListener('click', () => {
+                let endpoint=`/task/delete/${task.dataset.doc}`;
+                
+                fetch(endpoint,{
+                    method:'DELETE'
+                })
+                .then((response) => response.json())
+                .then(data => window.location.href = data.redirect)
+            })
+        })
+    </script>
+</body>
+</html>
