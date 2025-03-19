@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Upload an Image</h2>
+        <% if (typeof error !== 'undefined') { %>
+            <p style="color: red;"><%= error %></p>
+        <% } %>
+        <% if (typeof success !== 'undefined') { %>
+            <p style="color: green;"><%= success %></p>
+        <% } %>
+    
+        
+        <!-- 🔹 Image Upload Form -->
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" multiple required>
+            <br>
+            <button type="submit">Upload</button>
+        </form>
+
+        <!-- 🔹 Show Images Button -->
+        <form action="/images" method="GET">
+            <button type="submit">Show Images</button>
+        </form>
+
+        <a href="/auth/logout">logout</a>
+
+    </div>
+
+</body>
+</html>

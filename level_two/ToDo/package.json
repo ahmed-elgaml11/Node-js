@@ -6,7 +6,7 @@
     "build": "tsc",
     "dev": "tsx watch src/app.ts",
     "start": "node dest/app.js",
-    "final": "concurrently \"tsc -w\" \"nodemon dest/app.js\""
+    "final": "concurrently \"tsc -w\" \"node dest/app.js\""
   },
   "keywords": [],
   "author": "",
