@@ -51,12 +51,11 @@
             if (confirm('Are you sure you want to delete this image?')) {
                 try {
                     const response = await fetch(`/images/${imageId}`, { method: 'DELETE' });
-                    const data = await response.json();
                     if (response.ok) {
-                        alert(data.message);
+                        alert('done');
                         location.reload();
                     } else {
-                        alert('Error: ' + data.message);
+                        alert('An error occurred');
                     }
                 } catch (error) {
                     alert('An error occurred');

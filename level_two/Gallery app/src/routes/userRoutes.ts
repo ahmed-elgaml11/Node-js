@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Response } from 'express';
 const router = express.Router();
 import { isAuthenticated } from '../middlewares/authorization'
 import upload from '../middlewares/upload';
@@ -72,22 +72,21 @@ router.get('/images', isAuthenticated, async (req, res) => {
     }
 })
 
-router.delete('/images/:id', isAuthenticated, async (req, res) => {
+router.delete('/images/:id', isAuthenticated, async (req, res) =>  {
     const id = req.params.id;
     try{
         const image = await deleteImage(id);
         if(!image){
-            req.flash('error', "Image not found")
-            return res.redirect('/images')
+            res.sendStatus(404);
+            return;
         }
         await cloudinaryRemoveImage(id);
-
-        req.flash('success', "Image deleted successfully")
-        res.redirect('/images')
-
+        res.sendStatus(200);
+        return
+        
     }catch(err){
-        req.flash('error', 'there is something wrong in deleting the images');
-        res.redirect('/images')
+        res.sendStatus(500);
+        return;
     }
 })
 

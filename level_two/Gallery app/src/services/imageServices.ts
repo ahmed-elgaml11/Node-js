@@ -1,17 +1,13 @@
 import mongoose from 'mongoose'
 import Image from '../models/images'
-type imageDB = {
-    userId: mongoose.Types.ObjectId , 
-    publicId: string,
-    url: string
-}
+import {imageDB} from '../types/imgs/image'
+
+
 export const addImage = async (body: imageDB) => {
     const image = new Image(body)
     return image.save();
     
 }
-
-
 export const findImages = async (id: mongoose.Types.ObjectId) => {
     return Image.find({ userId: id } )
 
